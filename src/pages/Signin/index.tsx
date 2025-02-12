@@ -1,12 +1,8 @@
 import React from "react";
-
 import { FiLogIn, FiMail, FiLock } from "react-icons/fi"
-
 import logoImg from "../../assets/Logon.svg";
-
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-
 import { Container, Content, Background } from "./styles";
 
 const SignIn: React.FC = () => (
@@ -28,7 +24,6 @@ const SignIn: React.FC = () => (
 
             <a href="">
                 <FiLogIn />
-
                 Criar Conta
             </a>
         </Content>

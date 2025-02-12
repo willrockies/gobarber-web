@@ -24,7 +24,7 @@ const SignUp: React.FC = () => {
       <Content>
         <img src={logoImg} alt="GoBarber" />
 
-        <Form ref={formRef} onSubmit={handleSubmit} initialData={{ name: "Wilson" }} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+        <Form ref={formRef} onSubmit={handleSubmit} initialData={{ name: "" }} placeholder={""} onPointerEnterCapture={""} onPointerLeaveCapture={""}>
           <h1>Faça seu cadastro</h1>
 
           <Input icon={FiUser} name="name" placeholder="Nome" />
