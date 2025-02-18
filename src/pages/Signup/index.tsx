@@ -8,6 +8,8 @@ import * as Yup from 'yup';
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
+import getValidationErrors from "../../utils/getValidationErrors";
+
 import { Container, Content, Background } from "./styles";
 
 const SignUp: React.FC = () => {
@@ -16,6 +18,8 @@ const SignUp: React.FC = () => {
   // Use correct typing for the form data, if possible
   const handleSubmit = useCallback(async (data: object) => {
     try {
+      formRef.current?.setErrors({});
+      
       const schema = Yup.object().shape({
         name: Yup.string().required('Nome obrigatorio'),
         email: Yup.string().required('E-mail obrigatorio').email('Digite um e-mail valido'),
@@ -24,8 +28,14 @@ const SignUp: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+
     } catch (err) {
-      console.log(err);
+      if (err instanceof Yup.ValidationError) {
+
+        const errors = getValidationErrors(err);
+
+        formRef.current?.setErrors(errors);
+      }
     }
   }, []);
 
