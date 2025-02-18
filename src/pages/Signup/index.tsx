@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { FiLogIn, FiMail, FiLock, FiUser, FiArrowLeft } from "react-icons/fi";
 
 import logoImg from "../../assets/Logon.svg";
 import { Form } from "@unform/web";
 import { FormHandles } from "@unform/core"; // Import FormHandles for ref typing
-
+import * as Yup from 'yup';
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
@@ -14,9 +14,20 @@ const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null); // Correctly typed ref
 
   // Use correct typing for the form data, if possible
-  function handleSubmit(data: Record<string, any>): void {
-    console.log(data); // Log form data when submitted
-  }
+  const handleSubmit = useCallback(async (data: object) => {
+    try {
+      const schema = Yup.object().shape({
+        name: Yup.string().required('Nome obrigatorio'),
+        email: Yup.string().required('E-mail obrigatorio').email('Digite um e-mail valido'),
+        password: Yup.string().required('Senha obrigatorio').min(6, 'No mínimo 6 digitos')
+      });
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
     <Container>
