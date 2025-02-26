@@ -10,16 +10,21 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { Container, Content, Background } from "./styles";
 import getValidationErrors from "../../utils/getValidationErrors";
+import { json } from "stream/consumers";
 
 interface SignFormData {
     email: string;
     password: string;
 }
 
+
 const SignIn: React.FC = () => {
 
     const formRef = useRef<FormHandles>(null); // Correctly typed ref
-    const { signIn } = useContext(AuthContext);
+    
+    const { user, signIn } = useContext(AuthContext);
+    console.log(user);
+    
 
     const handleSubmit = useCallback(
         async (data: SignFormData) => {
