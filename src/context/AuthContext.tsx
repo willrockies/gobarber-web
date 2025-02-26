@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, ReactNode, useState } from 'react';
+import React, { createContext, useCallback, ReactNode, useState, useContext } from 'react';
 import api from '../services/api';
 
 
@@ -61,4 +61,14 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     );
 };
 
-export { AuthContext, AuthProvider }
+function useAuth(): AuthContextData{
+    const context = useContext(AuthContext);
+
+    if(!context) {
+        throw new Error('useAuth must be used within as AuthProvider');
+    }
+
+    return context;
+}
+
+export {  AuthProvider, useAuth }
