@@ -77,7 +77,7 @@ export const Toast = styled.div<ToastProps>`
 
     ${props => !props.hasDescription && css`
         align-items: center;
-
+        
         svg{
             margin-top: 0;
         }
