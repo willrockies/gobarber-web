@@ -1,45 +1,33 @@
 import React from "react"
-import { FiAlertCircle, FiXCircle } from 'react-icons/fi';
-import { Container, Toast } from "./styles"
-const ToastContainer: React.FC = () => {
+import { useTransition } from 'react-spring';
+
+import { Container } from "./styles"
+
+import { ToastMessage } from "../../hooks/toast";
+import Toast from "./Toast";
+
+interface ToastContainerProps {
+    messages: ToastMessage[];
+}
+
+const ToastContainer: React.FC<ToastContainerProps> = ({ messages }) => {
+    const messagesWithTransitions = useTransition(
+        messages, {
+        from: { right: '-120%', opacity: 0 },
+        enter: { right: '0%', opacity: 1 },
+        leave: { right: '-120%', opacity: 0 },
+        keys: message => message.id,
+    });
 
     return (
         <Container>
-            <Toast hasDescription>
-                <FiAlertCircle size={20} />
-                <div>
-                    <strong>Aconteceu um erro</strong>
-                    <p>Não foi possivel login na aplicação</p>
-                </div>
-                <button>
-                    <FiXCircle size={18} />
-                </button>
-            </Toast>
+            {messagesWithTransitions((props, item, { key }) => (
+                <Toast key={key} message={item} style={props} />
+            ))}
 
-            <Toast type="success" hasDescription>
-                <FiAlertCircle size={20} />
-                <div>
-                    <strong>Sucesso</strong>
-                    {false && <p>Login realizado com sucesso</p>}
-                </div>
-                <button>
-                    <FiXCircle size={18} />
-                </button>
-            </Toast>
-
-            <Toast type="error" hasDescription>
-                <FiAlertCircle size={20} />
-                <div>
-                    <strong>Aconteceu um erro</strong>
-                    <p>Não foi possivel login na aplicação</p>
-                </div>
-                <button>
-                    <FiXCircle size={18} />
-                </button>
-            </Toast>
         </Container>
-    )
 
+    );
 }
 
 export default ToastContainer;

@@ -52,3 +52,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 para processo de deploy
 
 yarn build
+
+pacotes de animação instalados -> react spring 
+
+yarn add react-spring
