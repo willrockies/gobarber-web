@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from "react";
 import { FiLogIn, FiMail, FiLock } from "react-icons/fi";
 import { Form } from '@unform/web';
 import { FormHandles } from "@unform/core";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from 'yup'
 import { useAuth } from "../../hooks/auth";
 import { useToast } from "../../hooks/toast";
