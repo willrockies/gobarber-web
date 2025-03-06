@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from "react";
-import { FiLogIn, FiMail, FiLock, FiUser, FiArrowLeft } from "react-icons/fi";
+import { FiMail, FiLock, FiUser, FiArrowLeft } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { Form } from "@unform/web";
 import { FormHandles } from "@unform/core"; // Import FormHandles for ref typing
