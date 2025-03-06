@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { animation, shade } from "polished"
+import { shade } from "polished"
 import SignInBackground from "../../assets/sign-in-background.png"
 
 export const Container = styled.div`
