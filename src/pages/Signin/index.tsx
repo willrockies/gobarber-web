@@ -2,15 +2,16 @@ import React, { useCallback, useRef } from "react";
 import { FiLogIn, FiMail, FiLock } from "react-icons/fi";
 import { Form } from '@unform/web';
 import { FormHandles } from "@unform/core";
-
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from 'yup'
-import {  useAuth } from "../../hooks/auth";
-import {  useToast } from "../../hooks/toast";
+import { useAuth } from "../../hooks/auth";
+import { useToast } from "../../hooks/toast";
 import logoImg from "../../assets/Logon.svg";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-import { Container, Content, Background } from "./styles";
+import { Container, Content, Background, AnimationContainer } from "./styles";
 import getValidationErrors from "../../utils/getValidationErrors";
+// import { useHistory } from "react-router-dom";
 
 interface SignFormData {
     email: string;
@@ -23,6 +24,8 @@ const SignIn: React.FC = () => {
     const formRef = useRef<FormHandles>(null); // Correctly typed ref
     const { signIn } = useAuth();
     const { addToast } = useToast();
+    const navigate = useNavigate();
+
     const handleSubmit = useCallback(
         async (data: SignFormData) => {
             try {
@@ -39,7 +42,9 @@ const SignIn: React.FC = () => {
                 await signIn({
                     email: data.email,
                     password: data.password
-                });
+                }); 
+               
+                navigate('/dashboard');
 
             } catch (err) {
                 if (err instanceof Yup.ValidationError) {
@@ -47,6 +52,7 @@ const SignIn: React.FC = () => {
                     const errors = getValidationErrors(err);
 
                     formRef.current?.setErrors(errors);
+                    return;
                 }
                 // disparar um toast 
                 addToast({
@@ -55,32 +61,35 @@ const SignIn: React.FC = () => {
                     description: 'Ocorreu um erro ao fazer login, cheque as credenciais.',
                 });
             }
-        }, [signIn, addToast]);
+        }, [navigate,signIn, addToast]);
 
     return (
         <Container>
             <Content>
-                <img src={logoImg} alt="GoBarber" />
+                <AnimationContainer>
+                    <img src={logoImg} alt="GoBarber" />
 
-                <Form ref={formRef} onSubmit={handleSubmit} initialData={{ name: "" }} placeholder={""} onPointerEnterCapture={""} onPointerLeaveCapture={""}>
-                    <h1>Faça seu logon</h1>
+                    <Form ref={formRef} onSubmit={handleSubmit} initialData={{ name: "" }} placeholder={""} onPointerEnterCapture={""} onPointerLeaveCapture={""}>
+                        <h1>Faça seu logon</h1>
 
-                    <Input icon={FiMail} name="email" placeholder="E-mail"></Input>
-                    <Input icon={FiLock} name="password" type="password" placeholder="Senha"></Input>
+                        <Input icon={FiMail} name="email" placeholder="E-mail"></Input>
+                        <Input icon={FiLock} name="password" type="password" placeholder="Senha"></Input>
 
-                    <Button type="submit">
-                        Entrar
-                    </Button>
-                    <a href="forgot"> Esqueci minha senha</a>
-                </Form>
+                        <Button type="submit">
+                            Entrar
+                        </Button>
+                        <a href="forgot"> Esqueci minha senha</a>
+                    </Form>
 
-                <a href="/">
-                    <FiLogIn />
-                    Criar Conta
-                </a>
+                    <Link to="/signup">
+                        <FiLogIn />
+                        Criar Conta
+                    </Link>
+                </AnimationContainer>
             </Content>
             <Background />
-        </Container>
+
+        </Container >
     )
 }
 export default SignIn;

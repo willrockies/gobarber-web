@@ -56,3 +56,8 @@ yarn build
 pacotes de animação instalados -> react spring 
 
 yarn add react-spring
+
+
+pacote para rotas da aplicação
+yarn add react-router-dom
+yarn add @types/react-router-dom -D
