@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from "react";
 import { FiLogIn, FiMail, FiLock } from "react-icons/fi";
 import { Form } from '@unform/web';
 import { FormHandles } from "@unform/core";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import * as Yup from 'yup'
 import { useAuth } from "../../hooks/auth";
 import { useToast } from "../../hooks/toast";
@@ -11,6 +11,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { Container, Content, Background, AnimationContainer } from "./styles";
 import getValidationErrors from "../../utils/getValidationErrors";
+// import { useHistory } from "react-router-dom";
 
 interface SignFormData {
     email: string;
@@ -23,6 +24,8 @@ const SignIn: React.FC = () => {
     const formRef = useRef<FormHandles>(null); // Correctly typed ref
     const { signIn } = useAuth();
     const { addToast } = useToast();
+    const navigate = useNavigate();
+
     const handleSubmit = useCallback(
         async (data: SignFormData) => {
             try {
@@ -39,7 +42,9 @@ const SignIn: React.FC = () => {
                 await signIn({
                     email: data.email,
                     password: data.password
-                });
+                }); 
+               
+                navigate('/dashboard');
 
             } catch (err) {
                 if (err instanceof Yup.ValidationError) {
@@ -56,7 +61,7 @@ const SignIn: React.FC = () => {
                     description: 'Ocorreu um erro ao fazer login, cheque as credenciais.',
                 });
             }
-        }, [signIn, addToast]);
+        }, [navigate,signIn, addToast]);
 
     return (
         <Container>
